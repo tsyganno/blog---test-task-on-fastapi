@@ -30,7 +30,7 @@ def get_posts(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     posts = crud.get_posts(db, skip=skip, limit=limit)
     if not posts:
         raise HTTPException(status_code=404, detail="No posts found with the given query")
-    return crud.get_posts(db, skip=skip, limit=limit)
+    return posts
 
 
 @app.get("/posts/{post_id}", response_model=schemas.Post)
@@ -59,7 +59,7 @@ def delete_post(post_id: int, db: Session = Depends(get_db)):
     post = crud.delete_post(db, post_id=post_id)
     if not post:
         raise HTTPException(status_code=404, detail="Post not found")
-    return crud.delete_post(db, post_id=post_id)
+    return post
 
 
 @app.get("/posts/search/{query}", response_model=List[schemas.Post])
